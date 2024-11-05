@@ -3,16 +3,17 @@
 
 kvs_t* open()
 {
-	kvs_t* kvs = (kvs_t*) malloc (sizeof(kvs_t));
-	if (!kvs) return NULL;
+	kvs_t* kvs = (kvs_t*)malloc(sizeof(kvs_t));
+	kvs->header = (node_t*)malloc(sizeof(node_t));
+	kvs->header->forward = (node_t**)malloc(sizeof(node_t*) * (MAX_LEVEL + 1));
 
-	kvs->db = NULL;
+	for (int i = 0; i <= MAX_LEVEL; i++) {
+		kvs->header->forward[i] = NULL;
+	}
+	kvs->level = 0;
 	kvs->items = 0;
-	return kvs;
-}
-/*	if(kvs)
-		kvs->items = 0;
-	printf("Open: kvs has %d items\n", kvs->items);
 
+	srand(time(NULL));
 	return kvs;
-}*/
+
+}
